@@ -50,5 +50,4 @@ class MyDexterSinglePermission(private val dexterResponse: MyDexterResponse, pri
             }
         }
     }
-
 }

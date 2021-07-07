@@ -43,10 +43,7 @@ class MyDexterMultiplePermissions(
                             }
                         })
                 }
-
             }
         }
-
     }
-
 }

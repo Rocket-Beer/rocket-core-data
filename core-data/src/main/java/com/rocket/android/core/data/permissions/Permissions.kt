@@ -44,9 +44,7 @@ class Permissions(private val dexter: DexterBuilder.Permission) {
                 ) {
                     permissionToken?.continuePermissionRequest()
                 }
-
             }).check()
-
     }
 
     fun checkSinglePermission(
@@ -78,8 +76,6 @@ class Permissions(private val dexter: DexterBuilder.Permission) {
                         )
                     )
                 }
-
             }).check()
     }
-
 }

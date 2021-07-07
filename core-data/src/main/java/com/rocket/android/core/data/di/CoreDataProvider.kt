@@ -14,5 +14,4 @@ class CoreDataProvider(private val context: Context) {
             )
         )
     }
-
 }
