@@ -8,7 +8,10 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.PermissionRequestErrorListener
 import com.karumi.dexter.listener.single.PermissionListener
 
-class MyDexterSinglePermission(private val dexterResponse: MyDexterResponse, private val permissionName: String) :
+class MyDexterSinglePermission(
+    private val dexterResponse: MyDexterResponse,
+    private val permissionName: String
+) :
     DexterBuilder.SinglePermissionListener {
 
     override fun withListener(p0: PermissionListener?): DexterBuilder {
