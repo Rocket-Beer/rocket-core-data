@@ -22,11 +22,10 @@ allprojects {
 }
 
 subprojects {
-    apply {
-        plugin("org.jlleitschuh.gradle.ktlint")
-        plugin("io.gitlab.arturbosch.detekt")
-        from("../detekt.gradle")
-    }
+    apply(from = "$rootDir/config/lint/code_style.gradle")
+
+    println("\n********** Configuration for == $project == **********")
+    apply(from = "$rootDir/config/publish/publish.gradle")
 }
 
 tasks.register("clean", Delete::class) {
