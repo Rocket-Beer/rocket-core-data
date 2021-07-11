@@ -1,4 +1,4 @@
-package com.rocket.android.core.data.di
+package com.rocket.android.core.data.permissions.di
 
 import android.content.Context
 import com.rocket.android.core.data.permissions.Permissions

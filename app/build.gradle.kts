@@ -36,8 +36,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":core-data"))
 
+    implementation(project(":core-data-permissions"))
     implementation(fileTree("libs") { include("*.jar") })
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.20")
 

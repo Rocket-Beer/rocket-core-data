@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.rocket.android.app.databinding.ActivityMainBinding
-import com.rocket.android.core.data.di.CoreDataProvider
+import com.rocket.android.core.data.permissions.di.CoreDataProvider
 import com.rocket.android.core.data.permissions.Permissions
 
 class MainActivity : AppCompatActivity() {

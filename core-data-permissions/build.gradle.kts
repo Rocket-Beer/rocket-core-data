@@ -33,9 +33,9 @@ android {
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.20")
 
-    implementation("com.karumi:dexter:6.2.2")
+    implementation("com.karumi:dexter:6.2.3")
 
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-inline:3.8.0")
-    testImplementation("org.mockito:mockito-core:3.9.0")
+    testImplementation("org.mockito:mockito-inline:3.11.2")
+    testImplementation("org.mockito:mockito-core:3.11.2")
 }
