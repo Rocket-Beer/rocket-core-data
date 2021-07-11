@@ -22,11 +22,11 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       env:
-        PUBLISHER_USERNAME: ${{ secrets.PUBLISHER_USERNAME }}
-        PUBLISHER_TOKEN: ${{ secrets.PUBLISHER_TOKEN }}
+        PUBLISHER_USERNAME: ${{ secrets.PUBLISHER_USERNAME_2 }}
+        PUBLISHER_TOKEN: ${{ secrets.PUBLISHER_TOKEN_2 }}
       run: ./gradlew build
     - name: Publish permissions version
       env:
-        PUBLISHER_USERNAME: ${{ secrets.PUBLISHER_USERNAME }}
-        PUBLISHER_TOKEN: ${{ secrets.PUBLISHER_TOKEN }}
+        PUBLISHER_USERNAME: ${{ secrets.PUBLISHER_USERNAME_2 }}
+        PUBLISHER_TOKEN: ${{ secrets.PUBLISHER_TOKEN_2 }}
       run: ./gradlew :core-data-permissions:publish
