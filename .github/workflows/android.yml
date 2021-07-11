@@ -25,5 +25,5 @@ jobs:
         PUBLISHER_USERNAME: ${{ secrets.PUBLISHER_USERNAME }}
         PUBLISHER_TOKEN: ${{ secrets.PUBLISHER_TOKEN }}
       run: ./gradlew build
-    - name: Publish version
-      run: ./gradlew publish
+    - name: Publish permissions version
+      run: ./gradlew :core-data-permissions:publish
