@@ -29,4 +29,4 @@ jobs:
       env:
         PUBLISHER_USERNAME: ${{ secrets.PUBLISHER_USERNAME_2 }}
         PUBLISHER_TOKEN: ${{ secrets.PUBLISHER_TOKEN_2 }}
-      run: ./gradlew :core-data-permissions:publish
+      run: ./gradlew :core-data-permissions:build :core-data-permissions:publish
