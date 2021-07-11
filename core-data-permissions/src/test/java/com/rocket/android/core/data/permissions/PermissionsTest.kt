@@ -1,12 +1,12 @@
 package com.rocket.android.core.data.permissions
 
-import com.rocket.android.core.data.mydexter.MyDexterMultiplePermissions
-import com.rocket.android.core.data.mydexter.MyDexterResponse
-import com.rocket.android.core.data.mydexter.MyDexterSinglePermission
 import com.karumi.dexter.DexterBuilder
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionRequest
+import com.rocket.android.core.data.mydexter.MyDexterMultiplePermissions
+import com.rocket.android.core.data.mydexter.MyDexterResponse
+import com.rocket.android.core.data.mydexter.MyDexterSinglePermission
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.fail
 import org.junit.Test
@@ -60,7 +60,7 @@ class PermissionsTest {
             },
             onSuccess = {
                 assert(true)
-            },
+            }
         )
     }
 

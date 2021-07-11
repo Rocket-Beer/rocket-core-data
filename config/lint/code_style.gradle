@@ -78,3 +78,9 @@ detekt {
         }
     }
 }
+
+ktlint {
+    version = "0.36.0"
+    android = true
+    disabledRules = ["import-ordering"]
+}
