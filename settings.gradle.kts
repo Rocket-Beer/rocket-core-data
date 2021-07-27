@@ -1,2 +1,2 @@
-include(":app", ":core-data-permissions")
+include(":sample-app", ":core-data-permissions")
 rootProject.name = "Rocket Core Data"

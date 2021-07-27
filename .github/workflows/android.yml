@@ -22,10 +22,7 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build permissions
-      run: ./gradlew :core-data-permissions:build
-
-    - name: Publish permissions
       env:
         GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: ./gradlew :core-data-permissions:publish
+      run: ./gradlew :core-data-permissions:build

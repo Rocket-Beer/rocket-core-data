@@ -7,7 +7,7 @@ android {
     compileSdkVersion(apiLevel = 30)
     buildToolsVersion("30.0.3")
     defaultConfig {
-        applicationId = "com.rocket.android.app"
+        applicationId = "com.rocket.android.core.data.sampe.app"
         minSdkVersion(minSdkVersion = 21)
         targetSdkVersion(targetSdkVersion = 30)
         versionCode = 1
