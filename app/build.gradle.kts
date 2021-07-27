@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion(30)
+    compileSdkVersion(apiLevel = 30)
     buildToolsVersion("30.0.3")
     defaultConfig {
         applicationId = "com.rocket.android.app"
-        minSdkVersion(21)
-        targetSdkVersion(30)
+        minSdkVersion(minSdkVersion = 21)
+        targetSdkVersion(targetSdkVersion = 30)
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -36,12 +36,11 @@ android {
 }
 
 dependencies {
-
     implementation(project(":core-data-permissions"))
     implementation(fileTree("libs") { include("*.jar") })
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.20")
 
-    implementation("androidx.appcompat:appcompat:1.3.0")
+    implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("androidx.core:core-ktx:1.6.0")
     implementation("androidx.constraintlayout:constraintlayout:2.0.4")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")

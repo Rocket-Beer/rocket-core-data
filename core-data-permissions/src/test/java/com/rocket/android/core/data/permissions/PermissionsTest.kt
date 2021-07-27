@@ -38,7 +38,8 @@ class PermissionsTest {
             },
             onSuccess = {
                 fail()
-            })
+            }
+        )
     }
 
     @Test
@@ -69,11 +70,13 @@ class PermissionsTest {
         val report = mock(MultiplePermissionsReport::class.java)
         val namePermissions = listOf<String>()
 
-        Mockito.`when`(report.deniedPermissionResponses).thenReturn(namePermissions.map {
-            PermissionDeniedResponse(
-                PermissionRequest(it), false
-            )
-        })
+        Mockito.`when`(report.deniedPermissionResponses).thenReturn(
+            namePermissions.map {
+                PermissionDeniedResponse(
+                    PermissionRequest(it), false
+                )
+            }
+        )
         Mockito.`when`(report.areAllPermissionsGranted()).thenReturn(false)
 
         Mockito.`when`(dexter.withPermissions(Mockito.anyCollection())).thenReturn(
