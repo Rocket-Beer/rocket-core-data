@@ -41,7 +41,8 @@ class MyDexterMultiplePermissions(
                             override fun cancelPermissionRequest() {
                                 // Nothing to implement.
                             }
-                        })
+                        }
+                    )
                 }
             }
         }

@@ -1,13 +1,13 @@
-package com.rocket.android.core.data.app
+package com.rocket.android.core.data.sample.app
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import com.rocket.android.app.databinding.ActivityMainBinding
-import com.rocket.android.core.data.permissions.di.CoreDataProvider
 import com.rocket.android.core.data.permissions.Permissions
+import com.rocket.android.core.data.permissions.di.CoreDataProvider
+import com.rocket.android.core.data.sample.app.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
 
     private lateinit var binding: ActivityMainBinding
 

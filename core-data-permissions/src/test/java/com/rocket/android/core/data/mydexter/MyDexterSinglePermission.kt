@@ -41,7 +41,8 @@ class MyDexterSinglePermission(
                     )
                 )
                 MyDexterResponse.RATIONALE -> listener?.onPermissionRationaleShouldBeShown(
-                    PermissionRequest(permissionName), object : PermissionToken {
+                    PermissionRequest(permissionName),
+                    object : PermissionToken {
                         override fun continuePermissionRequest() {
                             // Nothing to implement.
                         }
@@ -49,7 +50,8 @@ class MyDexterSinglePermission(
                         override fun cancelPermissionRequest() {
                             // Nothing to implement.
                         }
-                    })
+                    }
+                )
             }
         }
     }
