@@ -9,73 +9,74 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
+import com.rocket.core.domain.functional.Either
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class Permissions(private val dexter: DexterBuilder.Permission) {
 
-    fun checkMultiplePermissions(
-        permissions: List<String>,
-        onError: (PermissionResponse.MultiplePermissionDenied) -> Unit,
-        onSuccess: () -> Unit
-    ) {
-        dexter.withPermissions(permissions)
-            .withListener(object : MultiplePermissionsListener {
+    suspend fun checkMultiplePermissions(permissions: List<String>): Either<PermissionError, Unit> =
+        suspendCoroutine { continuation ->
+            dexter.withPermissions(permissions)
+                .withListener(object : MultiplePermissionsListener {
 
-                @SuppressLint("MissingPermission")
-                override fun onPermissionsChecked(permission: MultiplePermissionsReport) {
-                    if (permission.areAllPermissionsGranted()) {
-                        onSuccess()
-                    } else {
-                        onError(
-                            PermissionResponse.MultiplePermissionDenied(
-                                data = permission.deniedPermissionResponses.map {
-                                    PermissionDenied(
-                                        isPermanentlyDenied = it.isPermanentlyDenied,
-                                        permissionName = it.permissionName
+                    @SuppressLint("MissingPermission")
+                    override fun onPermissionsChecked(permission: MultiplePermissionsReport) {
+                        if (permission.areAllPermissionsGranted()) {
+                            continuation.resume(Either.Right(Unit))
+                        } else {
+                            continuation.resume(
+                                Either.Left(
+                                    PermissionError.MultiplePermissionDenied(
+                                        data = permission.deniedPermissionResponses.map {
+                                            PermissionDenied(
+                                                isPermanentlyDenied = it.isPermanentlyDenied,
+                                                permissionName = it.permissionName
+                                            )
+                                        }
                                     )
-                                }
+                                )
+                            )
+                        }
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(
+                        permissionRequest: MutableList<PermissionRequest>,
+                        permissionToken: PermissionToken?
+                    ) {
+                        permissionToken?.continuePermissionRequest()
+                    }
+                }).check()
+        }
+
+    suspend fun checkSinglePermission(permission: String): Either<PermissionError, Unit> =
+        suspendCoroutine { continuation ->
+            dexter.withPermission(permission)
+                .withListener(object : PermissionListener {
+
+                    override fun onPermissionGranted(permission: PermissionGrantedResponse?) {
+                        continuation.resume(Either.Right(Unit))
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(
+                        permissionRequest: PermissionRequest,
+                        permissionToken: PermissionToken?
+                    ) {
+                        permissionToken?.continuePermissionRequest()
+                    }
+
+                    override fun onPermissionDenied(error: PermissionDeniedResponse) {
+                        continuation.resume(
+                            Either.Left(
+                                PermissionError.SinglePermissionDenied(
+                                    data = PermissionDenied(
+                                        isPermanentlyDenied = error.isPermanentlyDenied,
+                                        permissionName = error.permissionName
+                                    )
+                                )
                             )
                         )
                     }
-                }
-
-                override fun onPermissionRationaleShouldBeShown(
-                    permissionRequest: MutableList<PermissionRequest>,
-                    permissionToken: PermissionToken?
-                ) {
-                    permissionToken?.continuePermissionRequest()
-                }
-            }).check()
-    }
-
-    fun checkSinglePermission(
-        permission: String,
-        onError: (PermissionResponse.SinglePermissionDenied) -> Unit,
-        onSuccess: () -> Unit
-    ) {
-        dexter.withPermission(permission)
-            .withListener(object : PermissionListener {
-
-                override fun onPermissionGranted(permission: PermissionGrantedResponse?) {
-                    onSuccess()
-                }
-
-                override fun onPermissionRationaleShouldBeShown(
-                    permissionRequest: PermissionRequest,
-                    permissionToken: PermissionToken?
-                ) {
-                    permissionToken?.continuePermissionRequest()
-                }
-
-                override fun onPermissionDenied(error: PermissionDeniedResponse) {
-                    onError(
-                        PermissionResponse.SinglePermissionDenied(
-                            data = PermissionDenied(
-                                isPermanentlyDenied = error.isPermanentlyDenied,
-                                permissionName = error.permissionName
-                            )
-                        )
-                    )
-                }
-            }).check()
-    }
+                }).check()
+        }
 }

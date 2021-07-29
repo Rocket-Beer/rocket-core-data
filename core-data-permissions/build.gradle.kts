@@ -24,21 +24,24 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.20")
-
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.21")
     implementation("com.karumi:dexter:6.2.3")
+    api("com.rocket.core:core-domain:0.0.3-alpha6")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-inline:3.11.2")
     testImplementation("org.mockito:mockito-core:3.11.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1-native-mt")
 }

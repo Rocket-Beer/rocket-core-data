@@ -4,6 +4,14 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+
+        maven {
+            url = java.net.URI("https://maven.pkg.github.com/Rocket-Beer/rocket-core-data-network")
+            credentials {
+                username = publish.CommonMethods.getPublisherUserName(project = rootProject)
+                password = publish.CommonMethods.getPublisherPassword(project = rootProject)
+            }
+        }
     }
 }
 
