@@ -6,7 +6,7 @@ allprojects {
         mavenCentral()
 
         maven {
-            url = java.net.URI("https://maven.pkg.github.com/Rocket-Beer/rocket-core-data-network")
+            url = java.net.URI("https://maven.pkg.github.com/Rocket-Beer/rocket-core-domain")
             credentials {
                 username = publish.CommonMethods.getPublisherUserName(project = rootProject)
                 password = publish.CommonMethods.getPublisherPassword(project = rootProject)
