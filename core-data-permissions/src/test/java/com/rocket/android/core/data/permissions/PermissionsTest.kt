@@ -42,7 +42,7 @@ class PermissionsTest {
                     assert(error is PermissionError.SinglePermissionDenied)
                     assertEquals(
                         permissionName,
-                        (error as PermissionError.SinglePermissionDenied).data.permissionName
+                        (error as PermissionError.SinglePermissionDenied).error.permissionName
                     )
                 },
                 ifRight = {
@@ -100,7 +100,7 @@ class PermissionsTest {
                     assert(error is PermissionError.MultiplePermissionDenied)
                     assertEquals(
                         namePermissions.size,
-                        (error as PermissionError.MultiplePermissionDenied).data.size
+                        (error as PermissionError.MultiplePermissionDenied).error.size
                     )
                 },
                 ifRight = {
