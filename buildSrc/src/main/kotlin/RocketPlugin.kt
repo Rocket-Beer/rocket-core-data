@@ -1,6 +1,9 @@
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.publish.PublishingExtension
+import org.gradle.api.publish.maven.MavenPublication
+import org.gradle.kotlin.dsl.register
 
 class RocketPlugin : Plugin<Project> {
 
@@ -8,6 +11,7 @@ class RocketPlugin : Plugin<Project> {
         project.plugins.run {
             apply("io.gitlab.arturbosch.detekt")
             apply("org.jlleitschuh.gradle.ktlint")
+            apply("maven-publish")
         }
 
         (project.extensions.getByName("detekt") as? DetektExtension)?.run {
@@ -53,6 +57,28 @@ class RocketPlugin : Plugin<Project> {
                     reportId = "CustomJsonReport"
                     destination = project.file("build/reports/detekt.json")
                 }
+            }
+        }
+
+        (project.extensions.getByName("publishing") as? PublishingExtension)?.run {
+            repositories {
+                maven {
+                    name = publish.CommonMethods.getPublishRepoName(projectDir = project)
+                    setUrl(publish.CommonMethods.getPublishRepoUrl(projectDir = project))
+                    credentials {
+                        username =
+                            publish.CommonMethods.getPublisherUserName(project = project.rootProject)
+                        password =
+                            publish.CommonMethods.getPublisherPassword(project = project.rootProject)
+                    }
+                }
+            }
+
+            publications.register("gpr", MavenPublication::class) {
+                groupId = publish.CommonMethods.getPublishGroupId(projectDir = project)
+                artifactId = publish.CommonMethods.getPublishArtifactId(projectDir = project)
+                version = publish.CommonMethods.getPublishVersion(projectDir = project)
+                artifact(publish.CommonMethods.getPublishArtifact(projectDir = project))
             }
         }
     }

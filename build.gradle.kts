@@ -16,9 +16,8 @@ allprojects {
 }
 
 subprojects {
-    apply(plugin = "rocket-plugin")
     println("\n********** Configuration for == $project == **********")
-    apply(from = "$rootDir/config/publish/publish.gradle")
+    apply(plugin = "rocket-plugin")
 }
 
 tasks.register("clean", Delete::class) {
