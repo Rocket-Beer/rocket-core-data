@@ -27,6 +27,18 @@ fun Project.configPublish() {
             artifactId = CommonMethods.getPublishArtifactId(projectDir = this@configPublish)
             version = CommonMethods.getPublishVersion(projectDir = this@configPublish)
             artifact(CommonMethods.getPublishArtifact(projectDir = this@configPublish))
+
+            pom.withXml {
+                val dependenciesNode = asNode().appendNode("dependencies")
+
+                configurations.named("implementation").get().allDependencies.forEach {
+                    val dependencyNode = dependenciesNode.appendNode("dependency")
+                    dependencyNode.appendNode("groupId", it.group)
+                    dependencyNode.appendNode("artifactId", it.name)
+                    dependencyNode.appendNode("version", it.version)
+                    // Add scope?
+                }
+            }
         }
     }
 }
