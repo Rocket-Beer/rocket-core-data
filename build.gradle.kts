@@ -1,15 +1,21 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 allprojects {
     repositories {
         google()
         mavenCentral()
 
         maven {
-            url = java.net.URI("https://maven.pkg.github.com/Rocket-Beer/*")
+            println("**** Rocket Beer maven ****")
+
+            url = uri("https://maven.pkg.github.com/Rocket-Beer/*")
+
             credentials {
-                username = publish.CommonMethods.getPublisherUserName(project = rootProject)
-                password = publish.CommonMethods.getPublisherPassword(project = rootProject)
+                val userName = publish.CommonMethods.getPublisherUserName(rootProject)
+                val userPass = publish.CommonMethods.getPublisherPassword(rootProject)
+
+                println("user = $userName :: password = $userPass")
+
+                username = userName
+                password = userPass
             }
         }
     }
