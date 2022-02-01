@@ -36,7 +36,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":core-data-permissions"))
+//    implementation(project(":core-data-permissions"))
+    implementation("com.rocket.android.core:permissions:0.0.0-alpha01-SNAPSHOT")
     implementation(fileTree("libs") { include("*.jar") })
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.20")
 
