@@ -9,14 +9,13 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
-import com.rocket.core.domain.error.Failure
 import com.rocket.core.domain.functional.Either
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class Permissions(private val dexter: DexterBuilder.Permission) {
 
-    suspend fun checkMultiplePermissions(permissions: List<String>): Either<Failure, Unit> =
+    suspend fun checkMultiplePermissions(permissions: List<String>): Either<PermissionResponse.MultiplePermissionDenied, PermissionResponse.PermissionGranted> =
         suspendCoroutine { continuation ->
             dexter.withPermissions(permissions)
                 .withListener(object : MultiplePermissionsListener {
@@ -24,17 +23,12 @@ class Permissions(private val dexter: DexterBuilder.Permission) {
                     @SuppressLint("MissingPermission")
                     override fun onPermissionsChecked(permission: MultiplePermissionsReport) {
                         if (permission.areAllPermissionsGranted()) {
-                            continuation.resume(Either.Right(Unit))
+                            continuation.resume(Either.Right(PermissionResponse.PermissionGranted))
                         } else {
                             continuation.resume(
                                 Either.Left(
-                                    PermissionError.MultiplePermissionDenied(
-                                        data = permission.deniedPermissionResponses.map {
-                                            PermissionDenied(
-                                                isPermanentlyDenied = it.isPermanentlyDenied,
-                                                permissionName = it.permissionName
-                                            )
-                                        }
+                                    PermissionResponse.MultiplePermissionDenied(
+                                        data = permission.deniedPermissionResponses
                                     )
                                 )
                             )
@@ -50,13 +44,13 @@ class Permissions(private val dexter: DexterBuilder.Permission) {
                 }).check()
         }
 
-    suspend fun checkSinglePermission(permission: String): Either<Failure, Unit> =
+    suspend fun checkSinglePermission(permission: String): Either<PermissionResponse.SinglePermissionDenied, PermissionResponse.PermissionGranted> =
         suspendCoroutine { continuation ->
             dexter.withPermission(permission)
                 .withListener(object : PermissionListener {
 
                     override fun onPermissionGranted(permission: PermissionGrantedResponse?) {
-                        continuation.resume(Either.Right(Unit))
+                        continuation.resume(Either.Right(PermissionResponse.PermissionGranted))
                     }
 
                     override fun onPermissionRationaleShouldBeShown(
@@ -69,11 +63,8 @@ class Permissions(private val dexter: DexterBuilder.Permission) {
                     override fun onPermissionDenied(error: PermissionDeniedResponse) {
                         continuation.resume(
                             Either.Left(
-                                PermissionError.SinglePermissionDenied(
-                                    data = PermissionDenied(
-                                        isPermanentlyDenied = error.isPermanentlyDenied,
-                                        permissionName = error.permissionName
-                                    )
+                                PermissionResponse.SinglePermissionDenied(
+                                    data = error
                                 )
                             )
                         )
