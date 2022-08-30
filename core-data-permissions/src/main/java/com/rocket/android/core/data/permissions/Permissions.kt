@@ -15,7 +15,8 @@ import kotlin.coroutines.suspendCoroutine
 
 class Permissions(private val dexter: DexterBuilder.Permission) {
 
-    suspend fun checkMultiplePermissions(permissions: List<String>): Either<PermissionResponse.MultiplePermissionDenied, PermissionResponse.PermissionGranted> =
+    suspend fun checkMultiplePermissions(permissions: List<String>):
+        Either<PermissionResponse.MultiplePermissionDenied, PermissionResponse.PermissionGranted> =
         suspendCoroutine { continuation ->
             dexter.withPermissions(permissions)
                 .withListener(object : MultiplePermissionsListener {
@@ -43,8 +44,8 @@ class Permissions(private val dexter: DexterBuilder.Permission) {
                     }
                 }).check()
         }
-
-    suspend fun checkSinglePermission(permission: String): Either<PermissionResponse.SinglePermissionDenied, PermissionResponse.PermissionGranted> =
+    suspend fun checkSinglePermission(permission: String):
+        Either<PermissionResponse.SinglePermissionDenied, PermissionResponse.PermissionGranted> =
         suspendCoroutine { continuation ->
             dexter.withPermission(permission)
                 .withListener(object : PermissionListener {

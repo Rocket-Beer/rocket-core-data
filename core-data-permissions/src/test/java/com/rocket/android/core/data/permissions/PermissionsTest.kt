@@ -33,19 +33,11 @@ class PermissionsTest {
                     )
                 )
 
-            val response = permissions.checkSinglePermission(permission = permissionName)
-
-            assert(response.isLeft())
-
-            response.fold(
-                ifLeft = { error ->
-                    assert(error is PermissionError.SinglePermissionDenied)
-                    assertEquals(
-                        permissionName,
-                        (error as PermissionError.SinglePermissionDenied).error.permissionName
-                    )
+            permissions.checkSinglePermission(permission = permissionName).fold(
+                { failure: PermissionResponse.SinglePermissionDenied ->
+                    assertEquals(permissionName, failure.data.permissionName)
                 },
-                ifRight = {
+                {
                     fail()
                 }
             )
@@ -79,6 +71,7 @@ class PermissionsTest {
                 namePermissions.map {
                     PermissionDeniedResponse(
                         PermissionRequest(it), false
+
                     )
                 }
             )
@@ -91,19 +84,11 @@ class PermissionsTest {
                 )
             )
 
-            val response = permissions.checkMultiplePermissions(permissions = namePermissions)
-
-            assert(response.isLeft())
-
-            response.fold(
-                ifLeft = { error ->
-                    assert(error is PermissionError.MultiplePermissionDenied)
-                    assertEquals(
-                        namePermissions.size,
-                        (error as PermissionError.MultiplePermissionDenied).error.size
-                    )
+            permissions.checkMultiplePermissions(permissions = namePermissions).fold(
+                { failure: PermissionResponse.MultiplePermissionDenied ->
+                    assertEquals(namePermissions.size, failure.data.size)
                 },
-                ifRight = {
+                {
                     fail()
                 }
             )
